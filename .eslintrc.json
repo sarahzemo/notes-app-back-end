@@ -11,6 +11,13 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-console" :"off"
+        "no-console" :"off",
+        "indent":"off",
+        "padded-blocks":"off",
+        "spaced-comment":"off",
+        "quotes":"off",
+        "space-before-blocks":"off",
+        "key-spacing":"off",
+        "linebreak-style":"off"
     }
 }
