@@ -17,12 +17,12 @@ class UsersService {
     const id = `user-${nanoid(16)}`;
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = {
-        text: 'INSERT INTO users VALUES($1, $2, $3, $4) RETURNING id',
-        values: [id, username, hashedPassword, fullname],
-      };
+      text: 'INSERT INTO users VALUES($1, $2, $3, $4) RETURNING id',
+      values: [id, username, hashedPassword, fullname],
+    };
 
-      const result = await this._pool.query(query);
-      if (!result.rows.length) {
+    const result = await this._pool.query(query);
+    if (!result.rows.length) {
       throw new InvariantError('User gagal ditambahkan');
     }
     return result.rows[0].id;
@@ -76,6 +76,15 @@ class UsersService {
       throw new AuthenticationError('Kredensial yang Anda berikan salah');
     }
     return id;
+  }
+
+  async getUsersByUsername(username) {
+    const query = {
+      text: 'SELECT id, username, fullname FROM users WHERE username LIKE $1',
+      values: [`%${username}%`],
+    };
+    const result = await this._pool.query(query);
+    return result.rows;
   }
 }
 
